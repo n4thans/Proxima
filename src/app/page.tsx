@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 
 export default function Home() {
