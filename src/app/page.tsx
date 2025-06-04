@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 
 export default function Home() {
