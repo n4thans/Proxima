@@ -1,5 +1,8 @@
+'use client';
+
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { useState } from 'react';
 
 // Helper function to generate time slots
 const generateTimeSlots = () => {
@@ -23,6 +26,9 @@ export default function SchedulePage({ params }: { params: { id: string } }) {
     date.setDate(today.getDate() + i);
     return date;
   });
+
+  const [selectedDate, setSelectedDate] = useState<Date>(dates[0]);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   return (
     <main className="min-h-screen bg-gray-50 py-12">
@@ -58,8 +64,11 @@ export default function SchedulePage({ params }: { params: { id: string } }) {
             {dates.map((date, index) => (
               <button
                 key={index}
+                onClick={() => setSelectedDate(date)}
                 className={`flex-shrink-0 p-4 rounded-xl border-2 ${
-                  index === 0 ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-indigo-600'
+                  date.toDateString() === selectedDate.toDateString() 
+                    ? 'border-indigo-600 bg-indigo-50' 
+                    : 'border-gray-200 hover:border-indigo-600'
                 }`}
               >
                 <p className="text-sm text-gray-500 mb-1">
@@ -77,7 +86,12 @@ export default function SchedulePage({ params }: { params: { id: string } }) {
             {timeSlots.map((slot, index) => (
               <button
                 key={index}
-                className="p-3 rounded-xl border-2 border-gray-200 hover:border-indigo-600 transition-colors"
+                onClick={() => setSelectedTime(slot)}
+                className={`p-3 rounded-xl border-2 transition-colors ${
+                  selectedTime === slot
+                    ? 'border-indigo-600 bg-indigo-50'
+                    : 'border-gray-200 hover:border-indigo-600'
+                }`}
               >
                 {slot}
               </button>
@@ -87,8 +101,17 @@ export default function SchedulePage({ params }: { params: { id: string } }) {
           {/* Continue button */}
           <div className="mt-8">
             <Link
-              href="/consultation/doctor"
-              className="w-full bg-indigo-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center"
+              href={selectedTime ? "/consultation/doctor" : "#"}
+              className={`w-full py-3 px-6 rounded-full font-semibold transition-colors flex items-center justify-center ${
+                selectedTime 
+                  ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+              onClick={(e) => {
+                if (!selectedTime) {
+                  e.preventDefault();
+                }
+              }}
             >
               Continuer
             </Link>
