@@ -8,7 +8,7 @@ import { useState } from 'react';
 const generateTimeSlots = () => {
   const slots = [];
   for (let hour = 9; hour <= 18; hour++) {
-    for (let minute of ['00', '30']) {
+    for (const minute of ['00', '30']) {
       if (hour === 18 && minute === '30') continue;
       slots.push(`${hour}:${minute}`);
     }

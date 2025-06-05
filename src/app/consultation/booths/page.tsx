@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, WifiIcon, MapPinIcon, ClockIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, WifiIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 const booths = [
