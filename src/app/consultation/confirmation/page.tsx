@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { ArrowLeftIcon, CalendarIcon, MapPinIcon, ClockIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
@@ -25,21 +26,21 @@ export default function ConfirmationPage() {
     }
     
     if (!formData.email.trim()) {
-      newErrors.email = 'L\'email est requis';
+      newErrors.email = 'L&apos;email est requis';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'L\'email n\'est pas valide';
+      newErrors.email = 'L&apos;email n&apos;est pas valide';
     }
     
     if (!formData.phone.trim()) {
       newErrors.phone = 'Le téléphone est requis';
     } else if (!/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/.test(formData.phone)) {
-      newErrors.phone = 'Le numéro de téléphone n\'est pas valide';
+      newErrors.phone = 'Le numéro de téléphone n&apos;est pas valide';
     }
     
     if (!formData.socialSecurity.trim()) {
       newErrors.socialSecurity = 'Le numéro de sécurité sociale est requis';
     } else if (!/^\d{1}\s\d{2}\s\d{2}\s\d{2}\s\d{3}\s\d{3}\s\d{2}$/.test(formData.socialSecurity)) {
-      newErrors.socialSecurity = 'Le numéro de sécurité sociale n\'est pas valide';
+      newErrors.socialSecurity = 'Le numéro de sécurité sociale n&apos;est pas valide';
     }
     
     if (!formData.acceptTerms) {
@@ -60,7 +61,7 @@ export default function ConfirmationPage() {
         router.push('/consultation/success');
       } catch (error) {
         console.error('Error saving appointment:', error);
-        setErrors({ submit: 'Une erreur est survenue. Veuillez réessayer.' });
+        setErrors({ submit: "Une erreur est survenue. Veuillez réessayer." });
       }
     }
   };
@@ -243,7 +244,7 @@ export default function ConfirmationPage() {
                   }`}
                 />
                 <label htmlFor="terms" className="text-sm text-gray-500">
-                  J'accepte les conditions générales d'utilisation et la politique de confidentialité
+                  J&apos;accepte les conditions générales d&apos;utilisation et la politique de confidentialité
                 </label>
               </div>
               {errors.acceptTerms && (
