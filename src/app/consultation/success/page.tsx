@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { CheckCircleIcon, CalendarIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';

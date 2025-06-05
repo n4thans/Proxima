@@ -16,7 +16,7 @@ const generateTimeSlots = () => {
   return slots;
 };
 
-export default function SchedulePage({ params }: { params: { id: string } }) {
+export default function SchedulePage() {
   const timeSlots = generateTimeSlots();
   const today = new Date();
   
@@ -46,7 +46,7 @@ export default function SchedulePage({ params }: { params: { id: string } }) {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <span className="text-indigo-600 font-semibold">Étape 3/4</span>
-            <span className="text-gray-400 text-sm">Choix de l'horaire</span>
+            <span className="text-gray-400 text-sm">Choix de l&apos;horaire</span>
           </div>
           <div className="h-2 bg-gray-200 rounded-full">
             <div className="h-2 bg-indigo-600 rounded-full w-3/4"></div>

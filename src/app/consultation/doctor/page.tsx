@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
+'use client';
+
 import { ArrowLeftIcon, StarIcon, LanguageIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';

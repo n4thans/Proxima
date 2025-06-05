@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon, CalendarIcon, MapPinIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 
