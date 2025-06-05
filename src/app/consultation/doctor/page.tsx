@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
 
-import { ArrowLeftIcon, StarIcon, LanguageIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, StarIcon, LanguageIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
 const doctors = [
   {
@@ -16,6 +17,8 @@ const doctors = [
     rating: 4.9,
     reviews: 234,
     nextSlot: "14:30",
+    city: "Paris",
+    availability: "Disponible au créneau sélectionné (14:30)"
   },
   {
     id: 2,
@@ -27,6 +30,8 @@ const doctors = [
     rating: 4.7,
     reviews: 156,
     nextSlot: "15:45",
+    city: "Boulogne-Billancourt",
+    availability: "Disponible au créneau sélectionné (14:30)"
   },
   {
     id: 3,
@@ -38,10 +43,24 @@ const doctors = [
     rating: 4.8,
     reviews: 312,
     nextSlot: "16:15",
+    city: "Paris",
+    availability: "Disponible au créneau sélectionné (14:30)"
   }
 ];
 
 export default function DoctorPage() {
+  const searchParams = useSearchParams();
+  const selectedTime = searchParams.get('time') || '14:30';
+  const selectedDate = searchParams.get('date') || '2024-06-12';
+
+  // Format the date in French
+  const formattedDate = new Date(selectedDate).toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
   return (
     <main className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-6 max-w-4xl">
@@ -62,6 +81,14 @@ export default function DoctorPage() {
           </div>
           <div className="h-2 bg-gray-200 rounded-full">
             <div className="h-2 bg-indigo-600 rounded-full w-full"></div>
+          </div>
+        </div>
+
+        {/* Selected date/time reminder */}
+        <div className="bg-indigo-50 rounded-xl p-4 mb-8">
+          <div className="flex items-center gap-2 text-indigo-700">
+            <ClockIcon className="w-5 h-5" />
+            <span>Créneau sélectionné : {formattedDate} à {selectedTime}</span>
           </div>
         </div>
 
@@ -97,9 +124,15 @@ export default function DoctorPage() {
                         <h3 className="text-xl font-semibold text-gray-900 mb-1">
                           {doctor.name}
                         </h3>
-                        <p className="text-gray-500 mb-2">
-                          {doctor.experience} ans d'expérience
-                        </p>
+                        <div className="flex items-center gap-2 text-gray-500 mb-2">
+                          <MapPinIcon className="w-4 h-4" />
+                          <span>{doctor.city}</span>
+                          <span>•</span>
+                          <span>{doctor.experience} ans d'expérience</span>
+                        </div>
+                        <div className="text-sm text-green-600">
+                          {doctor.availability}
+                        </div>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center text-gray-900">
@@ -107,9 +140,6 @@ export default function DoctorPage() {
                           <span className="font-medium">{doctor.rating}</span>
                           <span className="text-gray-500 ml-1">({doctor.reviews} avis)</span>
                         </div>
-                        <p className="text-gray-500 text-sm">
-                          Prochain créneau à {doctor.nextSlot}
-                        </p>
                       </div>
                     </div>
 

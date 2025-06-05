@@ -1,7 +1,48 @@
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+/* eslint-disable react/no-unescaped-entities */
+'use client';
+
+import { ArrowLeftIcon, CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { useState } from 'react';
+
+const consultationReasons = [
+  {
+    id: 'routine',
+    title: "Consultation de routine",
+    description: "Suivi régulier, contrôle annuel",
+    urgency: "low",
+    eligible: true,
+    eligibilityMessage: "Parfaitement adapté à la téléconsultation"
+  },
+  {
+    id: 'persistent',
+    title: "Problème de peau persistant",
+    description: "Acné, eczéma, psoriasis...",
+    urgency: "medium",
+    eligible: true,
+    eligibilityMessage: "Adapté à la téléconsultation avec photos"
+  },
+  {
+    id: 'mole',
+    title: "Examen d'un grain de beauté",
+    description: "Vérification d'une tache ou d'un grain de beauté suspect",
+    urgency: "medium",
+    eligible: true,
+    eligibilityMessage: "Possible en téléconsultation avec photos HD"
+  },
+  {
+    id: 'emergency',
+    title: "Urgence dermatologique",
+    description: "Réaction allergique, infection cutanée sévère",
+    urgency: "high",
+    eligible: false,
+    eligibilityMessage: "Consultez les urgences ou SOS Médecins"
+  }
+];
 
 export default function ConsultationPage() {
+  const [selectedReason, setSelectedReason] = useState<string | null>(null);
+
   return (
     <main className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-6 max-w-3xl">
@@ -32,64 +73,58 @@ export default function ConsultationPage() {
           </h1>
 
           <div className="space-y-4">
-            {[
-              {
-                title: "Consultation de routine",
-                description: "Suivi régulier, contrôle annuel",
-                urgency: "low"
-              },
-              {
-                title: "Problème de peau persistant",
-                description: "Acné, eczéma, psoriasis...",
-                urgency: "medium"
-              },
-              {
-                title: "Examen d'un grain de beauté",
-                description: "Vérification d'une tache ou d'un grain de beauté suspect",
-                urgency: "medium"
-              },
-              {
-                title: "Urgence dermatologique",
-                description: "Réaction allergique, infection cutanée sévère",
-                urgency: "high"
-              }
-            ].map((option, index) => (
+            {consultationReasons.map((option) => (
               <label 
-                key={index}
-                className="block p-4 border rounded-xl cursor-pointer hover:border-indigo-600 transition-colors"
+                key={option.id}
+                className={`block p-6 border rounded-xl transition-colors ${
+                  option.eligible 
+                    ? 'hover:border-indigo-600 cursor-pointer' 
+                    : 'opacity-75 bg-gray-50'
+                } ${selectedReason === option.id ? 'border-indigo-600 ring-2 ring-indigo-600 ring-opacity-50' : ''}`}
               >
                 <div className="flex items-start">
                   <input 
                     type="radio" 
-                    name="consultation-reason" 
+                    name="consultation-reason"
+                    value={option.id}
+                    checked={selectedReason === option.id}
+                    onChange={() => option.eligible && setSelectedReason(option.id)}
                     className="mt-1 text-indigo-600 focus:ring-indigo-500"
+                    disabled={!option.eligible}
                   />
-                  <div className="ml-3">
-                    <p className="font-semibold text-gray-900">{option.title}</p>
-                    <p className="text-gray-500 text-sm">{option.description}</p>
+                  <div className="ml-3 flex-grow">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-semibold text-gray-900">{option.title}</p>
+                        <p className="text-gray-500 text-sm mb-2">{option.description}</p>
+                      </div>
+                    </div>
+                    <div className={`flex items-center gap-2 text-sm ${
+                      option.eligible ? 'text-green-600' : 'text-amber-600'
+                    }`}>
+                      {option.eligible ? (
+                        <CheckCircleIcon className="w-5 h-5" />
+                      ) : (
+                        <ExclamationTriangleIcon className="w-5 h-5" />
+                      )}
+                      {option.eligibilityMessage}
+                    </div>
                   </div>
                 </div>
               </label>
             ))}
           </div>
 
-          <div className="mt-8">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Description des symptômes
-            </label>
-            <textarea
-              className="w-full h-32 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600"
-              placeholder="Décrivez vos symptômes en détail..."
-            ></textarea>
-            <p className="text-sm text-gray-500 mt-2">
-              Minimum 30 caractères requis
-            </p>
-          </div>
-
-          <div className="mt-8">
+          {/* Continue button */}
+          <div className="mt-8 flex justify-end">
             <Link
-              href="/consultation/booths"
-              className="w-full bg-indigo-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center"
+              href={selectedReason ? "/consultation/booths" : "#"}
+              className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                selectedReason 
+                  ? 'bg-indigo-600 text-white hover:bg-indigo-700' 
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+              onClick={(e) => !selectedReason && e.preventDefault()}
             >
               Continuer
             </Link>

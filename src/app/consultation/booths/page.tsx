@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, WifiIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, WifiIcon, MapPinIcon, ClockIcon, BuildingOffice2Icon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 const booths = [
@@ -13,6 +13,8 @@ const booths = [
     reviews: 124,
     nextSlot: "Aujourd'hui 14:30",
     features: ["wifi", "parking", "handicap"],
+    locationType: "Mairie",
+    locationDetails: "Mairie du 11ème arrondissement, RDC, Guichet 3"
   },
   {
     id: 2,
@@ -25,6 +27,8 @@ const booths = [
     reviews: 89,
     nextSlot: "Aujourd'hui 15:45",
     features: ["wifi", "handicap"],
+    locationType: "Pharmacie",
+    locationDetails: "Pharmacie Centrale, à côté de l'espace parapharmacie"
   },
   {
     id: 3,
@@ -37,13 +41,15 @@ const booths = [
     reviews: 156,
     nextSlot: "Aujourd'hui 16:15",
     features: ["wifi", "parking", "handicap"],
+    locationType: "Cabinet infirmier",
+    locationDetails: "Cabinet du Dr. Martin, 1er étage avec ascenseur"
   }
 ];
 
 export default function BoothsPage() {
   return (
     <main className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-6 max-w-5xl">
+      <div className="container mx-auto px-6 max-w-4xl">
         {/* Back button */}
         <Link 
           href="/consultation"
@@ -66,73 +72,89 @@ export default function BoothsPage() {
 
         {/* Main content */}
         <div className="bg-white rounded-2xl shadow-sm p-8">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Choisissez une cabine
-            </h1>
-            <button className="text-indigo-600 hover:text-indigo-700 font-medium">
-              Voir la carte
-            </button>
-          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+            Choisissez une cabine de téléconsultation
+          </h1>
 
-          {/* Booths list */}
           <div className="space-y-6">
             {booths.map((booth) => (
               <div 
                 key={booth.id}
-                className="border rounded-xl p-6 hover:border-indigo-600 transition-colors cursor-pointer"
+                className="border rounded-xl p-6 hover:border-indigo-600 transition-colors"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                      {booth.name}
-                    </h3>
-                    <p className="text-gray-500 flex items-center">
-                      <MapPinIcon className="w-4 h-4 mr-1" />
+                <div className="flex items-start gap-6">
+                  {/* Location icon and type */}
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                      <BuildingOffice2Icon className="w-6 h-6 text-indigo-600" />
+                    </div>
+                  </div>
+
+                  {/* Booth info */}
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h3 className="text-xl font-semibold text-gray-900">
+                          {booth.name}
+                        </h3>
+                        <div className="flex items-center gap-2 text-gray-500 text-sm">
+                          <span className="font-medium text-indigo-600">{booth.locationType}</span>
+                          <span>•</span>
+                          <span>{booth.distance} km</span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-medium text-gray-900">
+                          {booth.rating} / 5
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {booth.reviews} avis
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-gray-600 mb-4">
                       {booth.address}, {booth.postalCode} {booth.city}
                     </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="flex items-center text-gray-900 font-medium">
-                      <span className="text-sm mr-1">{booth.rating}</span>
-                      {"★".repeat(Math.round(booth.rating))}
-                    </div>
-                    <p className="text-gray-500 text-sm">{booth.reviews} avis</p>
-                  </div>
-                </div>
+                    
+                    <p className="text-sm text-gray-500 mb-4">
+                      {booth.locationDetails}
+                    </p>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-3">
-                    {booth.features.includes('wifi') && (
-                      <div className="flex items-center text-gray-500">
-                        <WifiIcon className="w-5 h-5 mr-1" />
-                        <span className="text-sm">WiFi</span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex gap-3">
+                        {booth.features.includes('wifi') && (
+                          <div className="flex items-center text-gray-500">
+                            <WifiIcon className="w-5 h-5 mr-1" />
+                            <span className="text-sm">WiFi</span>
+                          </div>
+                        )}
+                        {booth.features.includes('parking') && (
+                          <div className="flex items-center text-gray-500">
+                            <span className="text-xl mr-1">🅿️</span>
+                            <span className="text-sm">Parking</span>
+                          </div>
+                        )}
+                        {booth.features.includes('handicap') && (
+                          <div className="flex items-center text-gray-500">
+                            <span className="text-xl mr-1">♿️</span>
+                            <span className="text-sm">Accessible</span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                    {booth.features.includes('parking') && (
-                      <div className="flex items-center text-gray-500">
-                        <span className="text-xl mr-1">🅿️</span>
-                        <span className="text-sm">Parking</span>
+                      <div className="flex items-center gap-6">
+                        <div className="flex items-center text-gray-500">
+                          <ClockIcon className="w-5 h-5 mr-1" />
+                          <span className="text-sm">{booth.nextSlot}</span>
+                        </div>
+                        <Link
+                          href={`/consultation/booths/${booth.id}/schedule`}
+                          className="bg-indigo-600 text-white px-6 py-2 rounded-full font-medium hover:bg-indigo-700 transition-colors inline-flex items-center"
+                        >
+                          Sélectionner
+                        </Link>
                       </div>
-                    )}
-                    {booth.features.includes('handicap') && (
-                      <div className="flex items-center text-gray-500">
-                        <span className="text-xl mr-1">♿️</span>
-                        <span className="text-sm">Accessible</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-6">
-                    <div className="flex items-center text-gray-500">
-                      <ClockIcon className="w-5 h-5 mr-1" />
-                      <span className="text-sm">{booth.nextSlot}</span>
                     </div>
-                    <Link
-                      href={`/consultation/booths/${booth.id}/schedule`}
-                      className="bg-indigo-600 text-white px-6 py-2 rounded-full font-medium hover:bg-indigo-700 transition-colors inline-flex items-center"
-                    >
-                      Sélectionner
-                    </Link>
                   </div>
                 </div>
               </div>
