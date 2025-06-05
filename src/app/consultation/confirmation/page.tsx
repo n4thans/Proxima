@@ -113,7 +113,7 @@ export default function ConfirmationPage() {
             {/* Doctor info */}
             <div className="flex items-center gap-4 mb-6 pb-6 border-b">
               <Image
-                src="https://randomuser.me/api/portraits/women/76.jpg"
+                src="/images/doctors/doctor-1.jpg"
                 alt="Dr. Sophie Martin"
                 width={64}
                 height={64}

@@ -9,7 +9,7 @@ const doctors = [
   {
     id: 1,
     name: "Dr. Sophie Martin",
-    image: "https://randomuser.me/api/portraits/women/76.jpg",
+    image: "/images/doctors/doctor-1.jpg",
     specialties: ["Dermatologie générale", "Dermatologie esthétique"],
     languages: ["Français", "Anglais"],
     experience: 12,
@@ -20,7 +20,7 @@ const doctors = [
   {
     id: 2,
     name: "Dr. Thomas Dubois",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    image: "/images/doctors/doctor-2.jpg",
     specialties: ["Dermatologie générale", "Dermatologie pédiatrique"],
     languages: ["Français", "Espagnol"],
     experience: 8,
@@ -31,7 +31,7 @@ const doctors = [
   {
     id: 3,
     name: "Dr. Marie Lambert",
-    image: "https://randomuser.me/api/portraits/women/45.jpg",
+    image: "/images/doctors/doctor-3.jpg",
     specialties: ["Dermatologie générale", "Cancérologie cutanée"],
     languages: ["Français", "Allemand"],
     experience: 15,
